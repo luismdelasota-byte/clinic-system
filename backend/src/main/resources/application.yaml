@@ -1,0 +1,39 @@
+spring: # Seccion donde colocamos configuraciones relacionadas con Spring Boot.
+#   spring
+#   ├── application
+#   ├── profiles
+#   ├── jpa
+#   └── flyway
+  application:
+    name: clinic-system # Nombre de la aplicacion(No es el nombre de la BD).
+# Spring Boot
+#   │
+#   └── clinic-system
+#   │
+#   ↓
+# PostgreSQL
+#   │
+#   └── clinic_db
+
+
+  profiles: # Indicamos que perfil de configuracion queremos utilizar.
+    active: dev # Perfil de desarrollo, para utilizar la base de datos local.
+
+  jpa: # Teconologia que utilizamos para trabajar con nuestras tablas de PostgreSQL desde Java
+       # JPA sera quien relacione la clase entidad de Java con una tabla de PostgreSQL
+    open-in-view: false # Queremos que el acceso a la base de datos ocurra principalmente dentro
+                        # de la capa de servicio, no en la capa del controlador, y no mantener
+                        # la conexion abierta durante toda la peticion HTTP innecesariamente.
+    hibernate: # Es la implementacion de JPA que estamos utilizando, y nos permite configurar ciertas propiedades.
+      ddl-auto: validate # Validamos que las tablas de la base de datos existan y tengan la misma estructura que nuestras clases entidad.
+                         # Le estamos diciendo a Hibernate que no cree ni modifique las tablas de la base de datos, solo que valide su estructura.
+                         # Tenemos diferentes opciones: create, create-drop, update, validate, none. En este caso, validate es la opcion mas segura para un entorno de produccion.
+                         # Nosotros creamos las tablas de la base de datos manualmente, y luego Hibernate valida que las clases entidad de Java coincidan con la estructura de las tablas de la base de datos.
+                         # Queremos que Flyway se encargue de crear y modificar las tablas de la base de datos, no Hibernate.
+  flyway: # Sera nuestro sistema de migraciones de base de datos, que nos permitira versionar y ejecutar scripts SQL para crear y modificar las tablas de la base de datos.
+    enabled: true # Activa Flyway
+    locations: classpath:db/migration # classpath : Estamos apuntando a la carpeta donde se encuentran nuestros scripts SQL de migracion de base de datos.
+
+server: # Configuramos el puerto en el que se ejecutara nuestra aplicacion Spring Boot.
+  port: ${PORT:8080} # Esto indica el puerto en el que se ejecutara nuestra aplicacion Spring Boot. Si la variable de entorno PORT esta definida, se utilizara ese valor, de lo contrario, se utilizara el valor por defecto 8080.
+                     # Utiliza la variable de entorno PORT si esta definida, de lo contrario, utiliza el valor por defecto 8080.

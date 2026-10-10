@@ -1,0 +1,27 @@
+spring:
+  datasource: # Fuente de datos, es decir, la base de datos a la que nos vamos a conectar.
+    url: jdbc:postgresql://localhost:5432/clinic_db #jdbc, Java utiliza JDBC para comunicarse con la DB
+    username: ${DB_USER}
+    password: ${DB_PASS}
+
+  jpa: # JPA/Hibernate se encarga de relacionar, mapear las clases entidad de Java con las tablas de la base de datos(PostgreSQL).
+    show-sql: true # Muestrame las consultas SQL que se estan ejecutando en la base de datos, para poder debuguear y ver que consultas se estan ejecutando.
+                   # ejm: patientRepository.findAll();
+                   # vemos en consola
+                   #  select
+                   #    p1_0.id,
+                   #    p1_0.name,
+                   #    p1_0.email
+                   #  from
+                   #    patients p1_0;
+    properties: # Aqui podemos colocar propiedades especificas que queremos pasarle a Hibernate, que es la implementacion de JPA que estamos utilizando.
+      hibernate:
+        format_sql: true # Hace que las consultas SQL que se muestran en consola esten formateadas, para que sean mas faciles de leer y entender.
+                         # ejm: select p1_0.id, p1_0.name, p1_0.email from patients p1_0;
+                          # vemos en consola
+                          #  select
+                          #    p1_0.id,
+                          #    p1_0.name,
+                          #    p1_0.email
+                          #  from
+                          #    patients p1_0;

@@ -1,0 +1,13 @@
+#archivos de configuracion de IntelliJ
+.idea/
+
+#archivos de modulos de IntelliJ
+*.iml
+
+#archivos generados por Maven al compilar
+target/
+
+#variables de entorno y credenciales que no deben subir a Github, en este caso no estamos usando este archivo de texto
+#para guardar variables de entorno, pero si se llegara a usar, este archivo no debe subirse a Github
+#en este caso estamos usando un archivo de variables de entorno en donde directamente Windows accede mediante PowerShell, por lo que no es necesario subir este archivo a Github.
+.env
